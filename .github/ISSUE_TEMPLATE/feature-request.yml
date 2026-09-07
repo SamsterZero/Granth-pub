@@ -1,0 +1,28 @@
+name: Feature request
+description: Suggest an enhancement or new feature for the publisher dashboard
+title: '[Feature]: '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement or user goal
+      description: Explain the goal or problem this feature solves for publishers.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe your proposed UX, feature behavior, or metadata field additions.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe alternative solutions or workarounds considered.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context or mockups

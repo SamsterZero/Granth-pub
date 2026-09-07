@@ -5,6 +5,16 @@ yarn.lock
 bun.lock
 bun.lockb
 
-# Miscellaneous
+# Generated and vendored content
 /static/
 /drizzle/
+.cursor/skills/
+.gemini/skills/
+.github/skills/
+.github/agents/
+.claude/
+.opencode/
+
+# Documentation
+*.md
+

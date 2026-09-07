@@ -1,0 +1,56 @@
+name: Bug report
+description: Report reproducible broken or unexpected behavior in the publisher dashboard
+title: '[Bug]: '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not attach copyrighted EPUBs or secret keys/tokens.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and its impact on the publisher dashboard.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Navigate to ...
+        2. Upload / Edit ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Commit or environment
+      placeholder: main / commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 140, macOS Sequoia
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Screenshots, console errors, or network logs
+  - type: checkboxes
+    id: check
+    attributes:
+      label: Verification
+      options:
+        - label: I have verified that no confidential tokens or copyrighted files are attached.
+          required: true

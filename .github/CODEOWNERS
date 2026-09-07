@@ -1,0 +1,21 @@
+# Default owner for all repository changes.
+* @SamsterZero
+
+# Security-sensitive automation and repository policy.
+/.github/ @SamsterZero
+/SECURITY.md @SamsterZero
+/CODE_OF_CONDUCT.md @SamsterZero
+
+# Architecture, database schema, and project rules.
+/PROJECT.md @SamsterZero
+/drizzle.config.ts @SamsterZero
+/src/lib/server/db/ @SamsterZero
+
+# Dependency and environment configuration.
+/package.json @SamsterZero
+/bun.lock @SamsterZero
+/compose.yaml @SamsterZero
+
+# Repository-local AI instructions and skills.
+/AGENTS.md @SamsterZero
+/GEMINI.md @SamsterZero

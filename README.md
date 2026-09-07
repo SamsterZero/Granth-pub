@@ -1,42 +1,25 @@
-# sv
+# Granthalay Publisher Dashboard (`granth-pub`)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+The publisher portal for [Granthalay](https://github.com/SamsterZero/Granthalay). It enables book publishers and independent authors to upload EPUB books, manage catalog details, configure pricing, and monitor sales and reader analytics.
 
-## Creating a project
+**Quick links:** [Publisher Wiki](https://github.com/SamsterZero/Granth-pub/wiki) · [Project Guide](PROJECT.md) · [Contributing](CONTRIBUTING.md) · [Granthalay Ecosystem](https://github.com/SamsterZero/Granthalay)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Capabilities & Usage
 
-```sh
-# create a new project
-npx sv create my-app
-```
+- **Book Publishing**: Upload and validate EPUB files with cover extraction, sample preview generation, and table of contents verification.
+- **Catalog & Metadata Management**: Specify required metadata (title, primary author, price, currency, DRM settings) and optional details (subtitle, series, edition, genre, target audience, tags, language).
+- **Sales & Reader Analytics**: View aggregated performance statistics including book sales, reader engagement metrics, conversion rates, and geographical insights.
+- **Distribution & Catalog Controls**: Control book availability, release schedules, sample previews, and promotional pricing across the Granthalay bookstore.
 
-To recreate this project with the same configuration:
+## Documentation & Governance
 
-```sh
-# recreate this project
-bun x sv@0.17.0 create --template minimal --types ts --add prettier eslint vitest="usages:component,unit" playwright tailwindcss="plugins:typography,forms" drizzle="database:postgresql+postgresql:postgres.js+docker:yes" better-auth="demo:password" ai-tools="ide:gemini,vscode,opencode,cursor,claude-code,other+delivery:plugin+tools:mcp,svelte-code-writer,svelte-core-bestpractices,svelte-file-editor+mcpSetup:local" --install bun granthalay-publisher-dashboard
-```
+Use [PROJECT.md](PROJECT.md) for technical architecture, Spring Boot Modulith backend integration context, tech stack overview, and development setup. Use the [Publisher Wiki](https://github.com/SamsterZero/Granth-pub/wiki) for publisher guides.
 
-## Developing
+- [Project Guide](PROJECT.md): Architecture overview, tech stack, and development setup.
+- [Contributing Guidelines](CONTRIBUTING.md): Workflow for code contributions and testing requirements.
+- [Security Policy](SECURITY.md): Private vulnerability reporting procedure.
+- [Code of Conduct](CODE_OF_CONDUCT.md): Community guidelines and standards.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## License
 
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Granthalay Publisher Dashboard is licensed under the [MIT License](LICENSE).
