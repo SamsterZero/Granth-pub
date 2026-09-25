@@ -12,6 +12,12 @@
 </script>
 
 <script lang="ts">
+	import { Card, CardHeader, CardTitle, CardContent } from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import { Textarea } from '$lib/components/ui/textarea';
+	import { Label } from '$lib/components/ui/label';
+	import { NativeSelect, NativeSelectOption } from '$lib/components/ui/native-select';
+
 	interface Props {
 		metadata: BookMetadata;
 		onUpdate: (metadata: BookMetadata) => void;
@@ -53,125 +59,107 @@
 	}
 </script>
 
-<div class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 shadow-sm">
-	<h3 class="border-b border-zinc-800 pb-3 text-sm font-semibold text-zinc-100">
-		Catalog & Metadata Details
-	</h3>
+<Card class="border-border bg-card">
+	<CardHeader class="border-b border-border pb-3">
+		<CardTitle class="text-sm font-semibold text-card-foreground">
+			Catalog & Metadata Details
+		</CardTitle>
+	</CardHeader>
 
-	<div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
-		<!-- Title -->
-		<div>
-			<label for="book-title" class="block text-xs font-medium text-zinc-300">
-				Book Title <span class="text-rose-400">*</span>
-			</label>
-			<input
-				id="book-title"
-				type="text"
-				bind:value={title}
-				oninput={notify}
-				required
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-				placeholder="e.g. Beyond the Silent Sky"
-			/>
-		</div>
+	<CardContent class="pt-5">
+		<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+			<!-- Title -->
+			<div class="space-y-1.5">
+				<Label for="book-title">
+					Book Title <span class="text-destructive">*</span>
+				</Label>
+				<Input
+					id="book-title"
+					type="text"
+					bind:value={title}
+					oninput={notify}
+					required
+					placeholder="e.g. Beyond the Silent Sky"
+				/>
+			</div>
 
-		<!-- Subtitle -->
-		<div>
-			<label for="book-subtitle" class="block text-xs font-medium text-zinc-300">
-				Subtitle (Optional)
-			</label>
-			<input
-				id="book-subtitle"
-				type="text"
-				bind:value={subtitle}
-				oninput={notify}
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-				placeholder="e.g. Chronicle of the First Explorers"
-			/>
-		</div>
+			<!-- Subtitle -->
+			<div class="space-y-1.5">
+				<Label for="book-subtitle">Subtitle (Optional)</Label>
+				<Input
+					id="book-subtitle"
+					type="text"
+					bind:value={subtitle}
+					oninput={notify}
+					placeholder="e.g. Chronicle of the First Explorers"
+				/>
+			</div>
 
-		<!-- Primary Author -->
-		<div>
-			<label for="book-author" class="block text-xs font-medium text-zinc-300">
-				Primary Author / Creator <span class="text-rose-400">*</span>
-			</label>
-			<input
-				id="book-author"
-				type="text"
-				bind:value={author}
-				oninput={notify}
-				required
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-				placeholder="e.g. Arthur C. Clarke"
-			/>
-		</div>
+			<!-- Primary Author -->
+			<div class="space-y-1.5">
+				<Label for="book-author">
+					Primary Author / Creator <span class="text-destructive">*</span>
+				</Label>
+				<Input
+					id="book-author"
+					type="text"
+					bind:value={author}
+					oninput={notify}
+					required
+					placeholder="e.g. Arthur C. Clarke"
+				/>
+			</div>
 
-		<!-- ISBN -->
-		<div>
-			<label for="book-isbn" class="block text-xs font-medium text-zinc-300">
-				ISBN-13 (Optional)
-			</label>
-			<input
-				id="book-isbn"
-				type="text"
-				bind:value={isbn}
-				oninput={notify}
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-				placeholder="978-0-123456-47-2"
-			/>
-		</div>
+			<!-- ISBN -->
+			<div class="space-y-1.5">
+				<Label for="book-isbn">ISBN-13 (Optional)</Label>
+				<Input
+					id="book-isbn"
+					type="text"
+					bind:value={isbn}
+					oninput={notify}
+					placeholder="978-0-123456-47-2"
+				/>
+			</div>
 
-		<!-- Language -->
-		<div>
-			<label for="book-lang" class="block text-xs font-medium text-zinc-300"> Language </label>
-			<select
-				id="book-lang"
-				bind:value={language}
-				onchange={notify}
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-			>
-				<option value="en">English (en)</option>
-				<option value="es">Spanish (es)</option>
-				<option value="fr">French (fr)</option>
-				<option value="de">German (de)</option>
-				<option value="hi">Hindi (hi)</option>
-				<option value="mr">Marathi (mr)</option>
-				<option value="ja">Japanese (ja)</option>
-			</select>
-		</div>
+			<!-- Language -->
+			<div class="space-y-1.5">
+				<Label for="book-lang">Language</Label>
+				<NativeSelect id="book-lang" bind:value={language} onchange={notify}>
+					<NativeSelectOption value="en">English (en)</NativeSelectOption>
+					<NativeSelectOption value="es">Spanish (es)</NativeSelectOption>
+					<NativeSelectOption value="fr">French (fr)</NativeSelectOption>
+					<NativeSelectOption value="de">German (de)</NativeSelectOption>
+					<NativeSelectOption value="hi">Hindi (hi)</NativeSelectOption>
+					<NativeSelectOption value="mr">Marathi (mr)</NativeSelectOption>
+					<NativeSelectOption value="ja">Japanese (ja)</NativeSelectOption>
+				</NativeSelect>
+			</div>
 
-		<!-- Genre -->
-		<div>
-			<label for="book-genre" class="block text-xs font-medium text-zinc-300">
-				Genre / Subject
-			</label>
-			<select
-				id="book-genre"
-				bind:value={genre}
-				onchange={notify}
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-			>
-				<option value="Fiction">Fiction</option>
-				<option value="Sci-Fi & Fantasy">Sci-Fi & Fantasy</option>
-				<option value="Non-Fiction">Non-Fiction</option>
-				<option value="Technology">Technology</option>
-				<option value="History">History</option>
-				<option value="Philosophy">Philosophy</option>
-			</select>
-		</div>
+			<!-- Genre -->
+			<div class="space-y-1.5">
+				<Label for="book-genre">Genre / Subject</Label>
+				<NativeSelect id="book-genre" bind:value={genre} onchange={notify}>
+					<NativeSelectOption value="Fiction">Fiction</NativeSelectOption>
+					<NativeSelectOption value="Sci-Fi & Fantasy">Sci-Fi & Fantasy</NativeSelectOption>
+					<NativeSelectOption value="Non-Fiction">Non-Fiction</NativeSelectOption>
+					<NativeSelectOption value="Technology">Technology</NativeSelectOption>
+					<NativeSelectOption value="History">History</NativeSelectOption>
+					<NativeSelectOption value="Philosophy">Philosophy</NativeSelectOption>
+				</NativeSelect>
+			</div>
 
-		<!-- Description / Blurb -->
-		<div class="md:col-span-2">
-			<label for="book-desc" class="block text-xs font-medium text-zinc-300">
-				Book Description / Synopsis
-			</label>
-			<textarea
-				id="book-desc"
-				rows="4"
-				bind:value={description}
-				oninput={notify}
-				class="mt-1.5 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-				placeholder="Enter book description or promotional synopsis..."></textarea>
+			<!-- Description / Blurb -->
+			<div class="space-y-1.5 md:col-span-2">
+				<Label for="book-desc">Book Description / Synopsis</Label>
+				<Textarea
+					id="book-desc"
+					rows={4}
+					bind:value={description}
+					oninput={notify}
+					placeholder="Enter book description or promotional synopsis..."
+				/>
+			</div>
 		</div>
-	</div>
-</div>
+	</CardContent>
+</Card>

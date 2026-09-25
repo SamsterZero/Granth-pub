@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { UploadCloud, FileCheck, XCircle, RotateCcw } from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { Alert, AlertDescription, AlertTitle } from '$lib/components/ui/alert';
 
 	interface Props {
 		onFileSelect: (file: File) => void;
@@ -87,21 +89,24 @@
 			class="flex items-center justify-between rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 transition-colors"
 		>
 			<div class="flex items-center space-x-3 truncate">
-				<FileCheck class="h-6 w-6 shrink-0 text-emerald-400" />
+				<FileCheck class="h-6 w-6 shrink-0 text-emerald-500" />
 				<div class="truncate">
-					<p class="truncate text-sm font-medium text-emerald-200">{selectedFileName}</p>
-					<p class="text-xs text-emerald-400/80">{selectedFileSize}</p>
+					<p class="truncate text-sm font-medium text-emerald-950 dark:text-emerald-200">
+						{selectedFileName}
+					</p>
+					<p class="text-xs text-emerald-600 dark:text-emerald-400">{selectedFileSize}</p>
 				</div>
 			</div>
-			<button
-				type="button"
+			<Button
+				variant="ghost"
+				size="sm"
 				onclick={resetSelection}
-				class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20"
+				class="gap-1 text-xs text-emerald-700 hover:bg-emerald-500/20 hover:text-emerald-900 dark:text-emerald-300 dark:hover:text-emerald-100"
 				title="Change file"
 			>
 				<RotateCcw class="h-3.5 w-3.5" />
 				Change
-			</button>
+			</Button>
 		</div>
 	{:else}
 		<div
@@ -111,31 +116,33 @@
 			ondragleave={onDragLeave}
 			ondrop={onDrop}
 			class="relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all {isDragging
-				? 'scale-[1.01] border-indigo-400 bg-indigo-500/10'
-				: 'border-zinc-700 bg-zinc-900/50 hover:border-zinc-500'}"
+				? 'scale-[1.01] border-primary bg-primary/10'
+				: 'border-border bg-card/50 hover:border-primary/60'}"
 		>
 			<UploadCloud
-				class="mb-3 h-10 w-10 {isDragging ? 'text-indigo-400' : 'text-zinc-400'} transition-colors"
+				class="mb-3 h-10 w-10 {isDragging
+					? 'text-primary'
+					: 'text-muted-foreground'} transition-colors"
 			/>
-			<h4 class="text-sm font-semibold text-zinc-100">Drag & drop your EPUB file here</h4>
-			<p class="mt-1 text-xs text-zinc-400">Standard EPUB 2 or EPUB 3 (up to {maxSizeMb}MB)</p>
+			<h4 class="text-sm font-semibold text-card-foreground">Drag & drop your EPUB file here</h4>
+			<p class="mt-1 text-xs text-muted-foreground">
+				Standard EPUB 2 or EPUB 3 (up to {maxSizeMb}MB)
+			</p>
 
-			<label
-				class="mt-4 inline-flex cursor-pointer items-center rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors focus-within:ring-2 focus-within:ring-indigo-400 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900 hover:bg-indigo-500"
-			>
-				<span>Browse Files</span>
+			<label class="mt-4">
+				<Button size="sm" class="cursor-pointer font-semibold">Browse Files</Button>
 				<input type="file" {accept} {disabled} onchange={onFileInput} class="sr-only" />
 			</label>
 		</div>
 	{/if}
 
 	{#if errorMessage}
-		<div
-			class="mt-3 flex items-center space-x-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300"
-			role="alert"
-		>
-			<XCircle class="h-4 w-4 shrink-0 text-red-400" />
-			<span>{errorMessage}</span>
+		<div class="mt-3">
+			<Alert variant="destructive">
+				<XCircle class="h-4 w-4" />
+				<AlertTitle class="text-xs font-semibold">Upload Error</AlertTitle>
+				<AlertDescription class="text-xs">{errorMessage}</AlertDescription>
+			</Alert>
 		</div>
 	{/if}
 </div>
