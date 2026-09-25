@@ -5,7 +5,6 @@
 		UploadCloud,
 		BarChart3,
 		LogOut,
-		Building2,
 		Layers,
 		Menu,
 		ExternalLink,
@@ -59,26 +58,22 @@
 		{
 			href: '/submissions',
 			title: 'Submissions & Catalog',
-			icon: Layers,
-			iconColor: 'text-primary'
+			icon: Layers
 		},
 		{
 			href: '/submissions/new',
 			title: 'New Book Submission',
-			icon: UploadCloud,
-			iconColor: 'text-emerald-600 dark:text-emerald-400'
+			icon: UploadCloud
 		},
 		{
 			href: '/analytics',
 			title: 'Sales & Analytics',
-			icon: BarChart3,
-			iconColor: 'text-muted-foreground'
+			icon: BarChart3
 		},
 		{
 			href: '/settings',
 			title: 'Settings & Policies',
-			icon: Settings,
-			iconColor: 'text-muted-foreground'
+			icon: Settings
 		}
 	];
 </script>
@@ -116,11 +111,26 @@
 						: 'font-medium text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'}"
 				>
 					<item.icon
-						class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : item.iconColor}"
+						class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : 'text-muted-foreground'}"
 					/>
 					<span class="truncate">{item.title}</span>
 				</a>
 			{/each}
+
+			<Separator class="my-2 bg-sidebar-border" />
+
+			<a
+				href="https://samsterzero.github.io/Granthalay/store"
+				target="_blank"
+				rel="noreferrer"
+				class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground 2xl:text-sm"
+			>
+				<div class="flex items-center gap-3">
+					<BookOpen class="h-4 w-4 shrink-0 text-muted-foreground" />
+					<span class="truncate">Public Storefront</span>
+				</div>
+				<ExternalLink class="h-3.5 w-3.5 text-muted-foreground" />
+			</a>
 		</nav>
 
 		<!-- Bottom User Info -->
@@ -193,7 +203,9 @@
 											: 'font-medium text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'}"
 									>
 										<item.icon
-											class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : item.iconColor}"
+											class="h-4 w-4 shrink-0 {active
+												? 'text-primary-foreground'
+												: 'text-muted-foreground'}"
 										/>
 										<span>{item.title}</span>
 									</a>
@@ -204,13 +216,13 @@
 									target="_blank"
 									rel="noreferrer"
 									onclick={() => (mobileNavOpen = false)}
-									class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+									class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
 								>
 									<div class="flex items-center gap-3">
-										<BookOpen class="h-4 w-4 shrink-0 text-primary" />
+										<BookOpen class="h-4 w-4 shrink-0 text-muted-foreground" />
 										<span>Public Storefront</span>
 									</div>
-									<ExternalLink class="h-3.5 w-3.5" />
+									<ExternalLink class="h-3.5 w-3.5 text-muted-foreground" />
 								</a>
 							</nav>
 
@@ -244,17 +256,6 @@
 
 			<!-- Action Tools & Theme Switcher -->
 			<div class="flex items-center space-x-2 sm:space-x-3">
-				<Button
-					variant="ghost"
-					size="sm"
-					href="https://samsterzero.github.io/Granthalay/store"
-					target="_blank"
-					rel="noreferrer"
-					class="text-xs text-muted-foreground hover:text-foreground"
-				>
-					Storefront
-					<ExternalLink class="ml-1 h-3 w-3" />
-				</Button>
 				<ThemeToggle />
 			</div>
 		</header>
