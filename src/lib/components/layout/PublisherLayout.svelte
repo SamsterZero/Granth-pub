@@ -21,6 +21,7 @@
 		SheetTrigger
 	} from '$lib/components/ui/sheet';
 	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
+	import { page } from '$app/state';
 
 	interface Props {
 		children: Snippet;
@@ -28,6 +29,20 @@
 
 	let { children }: Props = $props();
 	let mobileNavOpen = $state(false);
+
+	function isActive(href: string): boolean {
+		const pathname = page.url.pathname;
+		if (href === '/submissions') {
+			return (
+				pathname === '/submissions' ||
+				(pathname.startsWith('/submissions/') && pathname !== '/submissions/new')
+			);
+		}
+		if (href === '/') {
+			return pathname === '/';
+		}
+		return pathname === href || pathname.startsWith(href + '/');
+	}
 
 	const navItems = [
 		{
@@ -82,11 +97,16 @@
 		<!-- Nav Links -->
 		<nav class="mt-4 flex-1 space-y-1">
 			{#each navItems as item}
+				{@const active = isActive(item.href)}
 				<a
 					href={item.href}
-					class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground 2xl:text-sm"
+					class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs transition-colors 2xl:text-sm {active
+						? 'bg-primary font-semibold text-primary-foreground shadow-xs'
+						: 'font-medium text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'}"
 				>
-					<item.icon class="h-4 w-4 shrink-0 {item.iconColor}" />
+					<item.icon
+						class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : item.iconColor}"
+					/>
 					<span class="truncate">{item.title}</span>
 				</a>
 			{/each}
@@ -151,12 +171,17 @@
 
 						<nav class="mt-2 flex-1 space-y-1">
 							{#each navItems as item}
+								{@const active = isActive(item.href)}
 								<a
 									href={item.href}
 									onclick={() => (mobileNavOpen = false)}
-									class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+									class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs transition-colors {active
+										? 'bg-primary font-semibold text-primary-foreground shadow-xs'
+										: 'font-medium text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'}"
 								>
-									<item.icon class="h-4 w-4 shrink-0 {item.iconColor}" />
+									<item.icon
+										class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : item.iconColor}"
+									/>
 									<span>{item.title}</span>
 								</a>
 							{/each}
@@ -224,19 +249,10 @@
 					href="https://samsterzero.github.io/Granthalay/store"
 					target="_blank"
 					rel="noreferrer"
-					class="hidden text-xs text-muted-foreground hover:text-foreground sm:inline-flex"
+					class="text-xs text-muted-foreground hover:text-foreground"
 				>
 					Storefront
 					<ExternalLink class="ml-1 h-3 w-3" />
-				</Button>
-				<Button
-					variant="outline"
-					size="sm"
-					href="/settings"
-					class="h-8 gap-1.5 px-2.5 text-xs font-semibold sm:h-9 sm:px-3"
-				>
-					<Settings class="h-3.5 w-3.5" />
-					<span>Settings</span>
 				</Button>
 				<ThemeToggle />
 			</div>
