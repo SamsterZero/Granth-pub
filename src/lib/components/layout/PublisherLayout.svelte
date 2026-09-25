@@ -25,10 +25,21 @@
 
 	interface Props {
 		children: Snippet;
+		title?: string;
 	}
 
-	let { children }: Props = $props();
+	let { children, title }: Props = $props();
 	let mobileNavOpen = $state(false);
+
+	let currentTitle = $derived.by(() => {
+		if (title) return title;
+		const pathname = page.url.pathname;
+		if (pathname === '/submissions/new') return 'New Book Submission';
+		if (pathname === '/submissions' || pathname.startsWith('/submissions/')) return 'Submissions';
+		if (pathname.startsWith('/analytics')) return 'Sales & Analytics';
+		if (pathname.startsWith('/settings')) return 'Settings';
+		return 'Publisher Hub';
+	});
 
 	function isActive(href: string): boolean {
 		const pathname = page.url.pathname;
@@ -139,106 +150,96 @@
 		<header
 			class="sticky top-0 z-30 flex h-16 w-full shrink-0 items-center justify-between border-b border-border bg-card/75 px-4 backdrop-blur sm:px-6 2xl:px-8"
 		>
-			<!-- Mobile / Tablet Menu & Brand -->
-			<div class="flex items-center space-x-2.5 lg:hidden">
-				<Sheet bind:open={mobileNavOpen}>
-					<SheetTrigger
-						class={buttonVariants({ variant: 'ghost', size: 'icon' }) + ' h-9 w-9 text-foreground'}
-					>
-						<Menu class="h-5 w-5" />
-						<span class="sr-only">Toggle navigation menu</span>
-					</SheetTrigger>
-					<SheetContent side="left" class="w-72 bg-sidebar p-4 text-sidebar-foreground">
-						<SheetHeader class="text-left">
-							<div class="flex items-center space-x-3 px-2 py-2">
-								<div
-									class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm"
-								>
-									<BookOpen class="h-5 w-5" />
+			<!-- Left: Mobile Menu Trigger + Dynamic Page Title -->
+			<div class="flex items-center space-x-3">
+				<div class="lg:hidden">
+					<Sheet bind:open={mobileNavOpen}>
+						<SheetTrigger
+							class={buttonVariants({ variant: 'ghost', size: 'icon' }) +
+								' h-9 w-9 text-foreground'}
+						>
+							<Menu class="h-5 w-5" />
+							<span class="sr-only">Toggle navigation menu</span>
+						</SheetTrigger>
+						<SheetContent side="left" class="w-72 bg-sidebar p-4 text-sidebar-foreground">
+							<SheetHeader class="text-left">
+								<div class="flex items-center space-x-3 px-2 py-2">
+									<div
+										class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm"
+									>
+										<BookOpen class="h-5 w-5" />
+									</div>
+									<div>
+										<SheetTitle class="text-sm font-bold text-sidebar-foreground">
+											Granthalay
+										</SheetTitle>
+										<span class="text-[11px] font-semibold tracking-wider text-primary uppercase">
+											Publisher Hub
+										</span>
+									</div>
 								</div>
-								<div>
-									<SheetTitle class="text-sm font-bold text-sidebar-foreground">
-										Granthalay
-									</SheetTitle>
-									<span class="text-[11px] font-semibold tracking-wider text-primary uppercase">
-										Publisher Hub
-									</span>
-								</div>
-							</div>
-						</SheetHeader>
+							</SheetHeader>
 
-						<Separator class="my-3 bg-sidebar-border" />
+							<Separator class="my-3 bg-sidebar-border" />
 
-						<nav class="mt-2 flex-1 space-y-1">
-							{#each navItems as item}
-								{@const active = isActive(item.href)}
+							<nav class="mt-2 flex-1 space-y-1">
+								{#each navItems as item}
+									{@const active = isActive(item.href)}
+									<a
+										href={item.href}
+										onclick={() => (mobileNavOpen = false)}
+										class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs transition-colors {active
+											? 'bg-primary font-semibold text-primary-foreground shadow-xs'
+											: 'font-medium text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'}"
+									>
+										<item.icon
+											class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : item.iconColor}"
+										/>
+										<span>{item.title}</span>
+									</a>
+								{/each}
+								<Separator class="my-2 bg-sidebar-border" />
 								<a
-									href={item.href}
+									href="https://samsterzero.github.io/Granthalay/store"
+									target="_blank"
+									rel="noreferrer"
 									onclick={() => (mobileNavOpen = false)}
-									class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs transition-colors {active
-										? 'bg-primary font-semibold text-primary-foreground shadow-xs'
-										: 'font-medium text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'}"
+									class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
 								>
-									<item.icon
-										class="h-4 w-4 shrink-0 {active ? 'text-primary-foreground' : item.iconColor}"
-									/>
-									<span>{item.title}</span>
+									<div class="flex items-center gap-3">
+										<BookOpen class="h-4 w-4 shrink-0 text-primary" />
+										<span>Public Storefront</span>
+									</div>
+									<ExternalLink class="h-3.5 w-3.5" />
 								</a>
-							{/each}
-							<Separator class="my-2 bg-sidebar-border" />
-							<a
-								href="https://samsterzero.github.io/Granthalay/store"
-								target="_blank"
-								rel="noreferrer"
-								onclick={() => (mobileNavOpen = false)}
-								class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-							>
-								<div class="flex items-center gap-3">
-									<BookOpen class="h-4 w-4 shrink-0 text-primary" />
-									<span>Public Storefront</span>
-								</div>
-								<ExternalLink class="h-3.5 w-3.5" />
-							</a>
-						</nav>
+							</nav>
 
-						<div class="absolute right-4 bottom-4 left-4 border-t border-sidebar-border pt-4">
-							<div class="flex items-center justify-between px-2">
-								<div class="truncate">
-									<p class="truncate text-xs font-semibold text-sidebar-foreground">
-										Granthalay Press
-									</p>
-									<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
+							<div class="absolute right-4 bottom-4 left-4 border-t border-sidebar-border pt-4">
+								<div class="flex items-center justify-between px-2">
+									<div class="truncate">
+										<p class="truncate text-xs font-semibold text-sidebar-foreground">
+											Granthalay Press
+										</p>
+										<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
+									</div>
+									<Button
+										variant="ghost"
+										size="icon"
+										href="/account/sign-in"
+										title="Sign Out"
+										class="h-8 w-8 text-muted-foreground hover:text-foreground"
+									>
+										<LogOut class="h-4 w-4" />
+									</Button>
 								</div>
-								<Button
-									variant="ghost"
-									size="icon"
-									href="/account/sign-in"
-									title="Sign Out"
-									class="h-8 w-8 text-muted-foreground hover:text-foreground"
-								>
-									<LogOut class="h-4 w-4" />
-								</Button>
 							</div>
-						</div>
-					</SheetContent>
-				</Sheet>
-
-				<div class="flex items-center space-x-2">
-					<BookOpen class="h-5 w-5 text-primary" />
-					<span class="text-sm font-bold tracking-tight text-foreground sm:text-base">
-						Granthalay Pub
-					</span>
+						</SheetContent>
+					</Sheet>
 				</div>
-			</div>
 
-			<!-- Status indicator (Laptop / Desktop / Ultrawide) -->
-			<div class="hidden items-center space-x-2 text-xs text-muted-foreground lg:flex">
-				<span>Connected to</span>
-				<span
-					class="rounded bg-primary/10 px-2 py-0.5 font-mono text-[11px] font-medium text-primary"
-				>
-					Granthalay Modulith API v1
-				</span>
+				<h1 class="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+					{currentTitle}
+				</h1>
 			</div>
 
 			<!-- Action Tools & Theme Switcher -->
