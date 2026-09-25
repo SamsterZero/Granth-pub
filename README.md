@@ -16,6 +16,7 @@ The publisher portal for [Granthalay](https://github.com/SamsterZero/Granthalay)
 Use [PROJECT.md](PROJECT.md) for technical architecture, Spring Boot Modulith backend integration context, tech stack overview, and development setup. Use the [Publisher Wiki](https://github.com/SamsterZero/Granth-pub/wiki) for publisher guides.
 
 - [Project Guide](PROJECT.md): Architecture overview, tech stack, and development setup.
+- [Policy & Governance Center](docs/README.md): Data privacy, publisher terms, commerce & taxation, and security runbooks.
 - [Contributing Guidelines](CONTRIBUTING.md): Workflow for code contributions and testing requirements.
 - [Security Policy](SECURITY.md): Private vulnerability reporting procedure.
 - [Code of Conduct](CODE_OF_CONDUCT.md): Community guidelines and standards.
