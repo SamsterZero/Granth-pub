@@ -8,9 +8,10 @@
 		Building2,
 		Layers,
 		Menu,
-		ExternalLink
+		ExternalLink,
+		Settings
 	} from 'lucide-svelte';
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { Separator } from '$lib/components/ui/separator';
 	import {
 		Sheet,
@@ -48,9 +49,9 @@
 			iconColor: 'text-muted-foreground'
 		},
 		{
-			href: '/settings/profile',
-			title: 'Publisher Profile',
-			icon: Building2,
+			href: '/settings',
+			title: 'Settings & Policies',
+			icon: Settings,
 			iconColor: 'text-muted-foreground'
 		}
 	];
@@ -121,11 +122,11 @@
 			<!-- Mobile / Tablet Menu & Brand -->
 			<div class="flex items-center space-x-2.5 lg:hidden">
 				<Sheet bind:open={mobileNavOpen}>
-					<SheetTrigger>
-						<Button variant="ghost" size="icon" class="h-9 w-9 text-foreground">
-							<Menu class="h-5 w-5" />
-							<span class="sr-only">Toggle navigation menu</span>
-						</Button>
+					<SheetTrigger
+						class={buttonVariants({ variant: 'ghost', size: 'icon' }) + ' h-9 w-9 text-foreground'}
+					>
+						<Menu class="h-5 w-5" />
+						<span class="sr-only">Toggle navigation menu</span>
 					</SheetTrigger>
 					<SheetContent side="left" class="w-72 bg-sidebar p-4 text-sidebar-foreground">
 						<SheetHeader class="text-left">
@@ -231,10 +232,11 @@
 				<Button
 					variant="outline"
 					size="sm"
-					href="/docs"
-					class="h-8 px-2.5 text-xs font-semibold sm:h-9 sm:px-3"
+					href="/settings"
+					class="h-8 gap-1.5 px-2.5 text-xs font-semibold sm:h-9 sm:px-3"
 				>
-					Policies & Docs
+					<Settings class="h-3.5 w-3.5" />
+					<span>Settings</span>
 				</Button>
 				<ThemeToggle />
 			</div>
