@@ -3,6 +3,10 @@
 	import ReleaseControls from '$lib/components/publishing/ReleaseControls.svelte';
 	import AuditTimeline from '$lib/components/publishing/AuditTimeline.svelte';
 	import { type SubmissionResponse, type PublishingAuditEventResponse } from '$lib/api/publishing';
+	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Card } from '$lib/components/ui/card';
 	import { Plus, Search } from 'lucide-svelte';
 
 	let submissions = $state<SubmissionResponse[]>([
@@ -139,72 +143,88 @@
 			...auditEvents
 		];
 	}
+
+	function getBadgeVariant(status: string) {
+		switch (status) {
+			case 'PUBLISHED':
+				return 'default';
+			case 'APPROVED':
+				return 'secondary';
+			case 'SCHEDULED':
+				return 'outline';
+			case 'REJECTED':
+			case 'WITHDRAWN':
+				return 'destructive';
+			default:
+				return 'secondary';
+		}
+	}
 </script>
 
 <PublisherLayout>
-	<div class="mx-auto max-w-6xl space-y-6">
+	<div class="mx-auto w-full space-y-6">
 		<!-- Top Action Header -->
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 			<div>
-				<h2 class="text-2xl font-bold tracking-tight text-white">Submissions & Catalog</h2>
-				<p class="text-xs text-zinc-400">
+				<h2 class="text-xl font-bold tracking-tight text-foreground sm:text-2xl 2xl:text-3xl">
+					Submissions & Catalog
+				</h2>
+				<p class="text-xs text-muted-foreground sm:text-sm">
 					Manage manuscript review, scheduled releases, storefront withdrawals, and revised
 					editions.
 				</p>
 			</div>
 
-			<a
-				href="/submissions/new"
-				class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500"
-			>
+			<Button href="/submissions/new" class="gap-2 font-semibold">
 				<Plus class="h-4 w-4" />
 				New Title Submission
-			</a>
+			</Button>
 		</div>
 
-		<!-- Main Dual Column Workspace -->
-		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+		<!-- Main Responsive Workspace -->
+		<div class="3xl:grid-cols-5 grid grid-cols-1 gap-6 lg:grid-cols-3 2xl:grid-cols-4">
 			<!-- Submissions Master List -->
-			<div class="space-y-3">
+			<div class="space-y-3 lg:col-span-1">
 				<div class="relative">
-					<Search class="absolute top-2.5 left-3 h-3.5 w-3.5 text-zinc-400" />
-					<input
+					<Search class="absolute top-2.5 left-3 h-3.5 w-3.5 text-muted-foreground" />
+					<Input
 						type="text"
 						bind:value={searchQuery}
 						placeholder="Search titles..."
-						class="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 py-2 pr-3 pl-9 text-xs text-zinc-100 placeholder-zinc-500 focus:border-indigo-500 focus:outline-none"
+						class="pl-9 text-xs"
 					/>
 				</div>
 
 				<div class="space-y-2">
 					{#each filteredSubmissions as sub (sub.id)}
 						{@const isSelected = sub.id === activeSubmission?.id}
-						<button
-							type="button"
+						<Card
+							class="cursor-pointer border p-4 text-left transition-all hover:border-primary/50 {isSelected
+								? 'border-primary bg-primary/5 shadow-xs'
+								: 'border-border bg-card'}"
 							onclick={() => (selectedSubmissionId = sub.id)}
-							class="w-full rounded-xl border p-4 text-left transition-all {isSelected
-								? 'border-indigo-500 bg-indigo-500/10'
-								: 'border-zinc-800/80 bg-zinc-900/40 hover:border-zinc-700'}"
 						>
 							<div class="flex items-center justify-between">
-								<span
-									class="rounded bg-zinc-800 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-zinc-300 uppercase"
-								>
+								<Badge variant={getBadgeVariant(sub.status)} class="text-[10px] uppercase">
 									{sub.status}
-								</span>
-								<span class="text-[10px] text-zinc-500">
+								</Badge>
+								<span class="text-[10px] text-muted-foreground">
 									{new Date(sub.createdAt).toLocaleDateString()}
 								</span>
 							</div>
-							<h4 class="mt-2 line-clamp-1 text-xs font-bold text-zinc-100">{sub.title}</h4>
-							<p class="mt-0.5 font-mono text-[11px] text-zinc-400">Edition: {sub.editionId}</p>
-						</button>
+							<h4 class="mt-2 line-clamp-1 text-xs font-bold text-card-foreground sm:text-sm">
+								{sub.title}
+							</h4>
+							<p class="mt-0.5 font-mono text-[11px] text-muted-foreground">
+								Edition: {sub.editionId}
+							</p>
+						</Card>
 					{/each}
 				</div>
 			</div>
 
 			<!-- Submission Detail & Lifecycle Controls -->
-			<div class="space-y-6 lg:col-span-2">
+			<div class="3xl:col-span-4 space-y-6 lg:col-span-2 2xl:col-span-3">
 				{#if activeSubmission}
 					<ReleaseControls
 						submission={activeSubmission}
