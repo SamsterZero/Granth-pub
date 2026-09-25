@@ -1,0 +1,17 @@
+{
+	"name": "Granthalay Publisher Hub",
+	"short_name": "Granthalay Pub",
+	"description": "Publisher portal for EPUB book publishing, catalog management, and distribution analytics.",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#0D5C63",
+	"theme_color": "#0D5C63",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		}
+	]
+}
