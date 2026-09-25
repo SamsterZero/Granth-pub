@@ -159,6 +159,20 @@
 									<span>{item.title}</span>
 								</a>
 							{/each}
+							<Separator class="my-2 bg-sidebar-border" />
+							<a
+								href="https://samsterzero.github.io/Granthalay/store"
+								target="_blank"
+								rel="noreferrer"
+								onclick={() => (mobileNavOpen = false)}
+								class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+							>
+								<div class="flex items-center gap-3">
+									<BookOpen class="h-4 w-4 shrink-0 text-primary" />
+									<span>Public Storefront</span>
+								</div>
+								<ExternalLink class="h-3.5 w-3.5" />
+							</a>
 						</nav>
 
 						<div class="absolute right-4 bottom-4 left-4 border-t border-sidebar-border pt-4">
@@ -206,7 +220,7 @@
 				<Button
 					variant="ghost"
 					size="sm"
-					href="https://github.com/SamsterZero/Granthalay"
+					href="https://samsterzero.github.io/Granthalay/store"
 					target="_blank"
 					rel="noreferrer"
 					class="hidden text-xs text-muted-foreground hover:text-foreground sm:inline-flex"
