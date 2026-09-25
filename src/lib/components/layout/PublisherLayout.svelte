@@ -1,123 +1,236 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { BookOpen, UploadCloud, BarChart3, LogOut, Building2, Layers } from 'lucide-svelte';
+	import {
+		BookOpen,
+		UploadCloud,
+		BarChart3,
+		LogOut,
+		Building2,
+		Layers,
+		Menu,
+		ExternalLink
+	} from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { Separator } from '$lib/components/ui/separator';
+	import {
+		Sheet,
+		SheetContent,
+		SheetHeader,
+		SheetTitle,
+		SheetTrigger
+	} from '$lib/components/ui/sheet';
+	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
 
 	interface Props {
 		children: Snippet;
 	}
 
 	let { children }: Props = $props();
+	let mobileNavOpen = $state(false);
+
+	const navItems = [
+		{
+			href: '/submissions',
+			title: 'Submissions & Catalog',
+			icon: Layers,
+			iconColor: 'text-primary'
+		},
+		{
+			href: '/submissions/new',
+			title: 'New Book Submission',
+			icon: UploadCloud,
+			iconColor: 'text-emerald-600 dark:text-emerald-400'
+		},
+		{
+			href: '/analytics',
+			title: 'Sales & Analytics',
+			icon: BarChart3,
+			iconColor: 'text-muted-foreground'
+		},
+		{
+			href: '/settings/profile',
+			title: 'Publisher Profile',
+			icon: Building2,
+			iconColor: 'text-muted-foreground'
+		}
+	];
 </script>
 
-<div
-	class="flex min-h-screen bg-zinc-950 font-sans text-zinc-100 antialiased selection:bg-indigo-500 selection:text-white"
->
-	<!-- Sidebar Navigation -->
-	<aside class="hidden w-64 flex-col border-r border-zinc-800/80 bg-zinc-900/40 p-4 md:flex">
+<div class="flex min-h-screen w-full bg-background font-sans text-foreground antialiased">
+	<!-- Desktop & Laptop Sidebar Navigation -->
+	<aside
+		class="3xl:w-80 hidden w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 text-sidebar-foreground lg:flex 2xl:w-72"
+	>
 		<!-- Brand Header -->
-		<div class="flex items-center space-x-3 border-b border-zinc-800/60 px-2 py-3">
+		<div class="flex items-center space-x-3 px-2 py-3">
 			<div
-				class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 shadow-md"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm"
 			>
-				<BookOpen class="h-5 w-5 text-white" />
+				<BookOpen class="h-5 w-5" />
 			</div>
-			<div>
-				<h1 class="text-sm font-bold tracking-tight text-white">Granthalay</h1>
-				<span class="text-[11px] font-semibold tracking-wider text-indigo-400 uppercase"
+			<div class="truncate">
+				<h1 class="text-sm font-bold tracking-tight text-sidebar-foreground">Granthalay</h1>
+				<span class="text-[11px] font-semibold tracking-wider text-primary uppercase"
 					>Publisher Hub</span
 				>
 			</div>
 		</div>
 
+		<Separator class="my-2 bg-sidebar-border" />
+
 		<!-- Nav Links -->
-		<nav class="mt-6 flex-1 space-y-1">
-			<a
-				href="/submissions"
-				class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-zinc-200 transition-colors hover:bg-zinc-800/60 hover:text-white"
-			>
-				<Layers class="h-4 w-4 text-indigo-400" />
-				Submissions & Catalog
-			</a>
-			<a
-				href="/submissions/new"
-				class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-zinc-200 transition-colors hover:bg-zinc-800/60 hover:text-white"
-			>
-				<UploadCloud class="h-4 w-4 text-emerald-400" />
-				New Book Submission
-			</a>
-			<a
-				href="/analytics"
-				class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-zinc-400 transition-colors hover:bg-zinc-800/60 hover:text-zinc-200"
-			>
-				<BarChart3 class="h-4 w-4 text-zinc-400" />
-				Sales & Analytics
-			</a>
-			<a
-				href="/settings/profile"
-				class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-zinc-400 transition-colors hover:bg-zinc-800/60 hover:text-zinc-200"
-			>
-				<Building2 class="h-4 w-4 text-zinc-400" />
-				Publisher Profile
-			</a>
+		<nav class="mt-4 flex-1 space-y-1">
+			{#each navItems as item}
+				<a
+					href={item.href}
+					class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground 2xl:text-sm"
+				>
+					<item.icon class="h-4 w-4 shrink-0 {item.iconColor}" />
+					<span class="truncate">{item.title}</span>
+				</a>
+			{/each}
 		</nav>
 
 		<!-- Bottom User Info -->
-		<div class="border-t border-zinc-800/60 pt-4">
+		<div class="pt-4">
+			<Separator class="mb-3 bg-sidebar-border" />
 			<div class="flex items-center justify-between px-2">
 				<div class="truncate">
-					<p class="truncate text-xs font-semibold text-zinc-200">Granthalay Press</p>
-					<p class="truncate text-[10px] text-zinc-400">admin@granthalay.org</p>
+					<p class="truncate text-xs font-semibold text-sidebar-foreground">Granthalay Press</p>
+					<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
 				</div>
-				<a
+				<Button
+					variant="ghost"
+					size="icon"
 					href="/account/sign-in"
-					class="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
 					title="Sign Out"
+					class="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
 				>
 					<LogOut class="h-4 w-4" />
-				</a>
+				</Button>
 			</div>
 		</div>
 	</aside>
 
-	<!-- Main Content Area -->
+	<!-- Main Workspace Area -->
 	<div class="flex flex-1 flex-col overflow-hidden">
 		<!-- Top Bar Header -->
 		<header
-			class="flex h-16 items-center justify-between border-b border-zinc-800/80 bg-zinc-900/20 px-6 backdrop-blur"
+			class="sticky top-0 z-30 flex h-16 w-full shrink-0 items-center justify-between border-b border-border bg-card/75 px-4 backdrop-blur sm:px-6 2xl:px-8"
 		>
-			<div class="flex items-center space-x-3 md:hidden">
-				<BookOpen class="h-5 w-5 text-indigo-400" />
-				<span class="text-sm font-bold text-white">Granthalay Pub</span>
+			<!-- Mobile / Tablet Menu & Brand -->
+			<div class="flex items-center space-x-2.5 lg:hidden">
+				<Sheet bind:open={mobileNavOpen}>
+					<SheetTrigger>
+						<Button variant="ghost" size="icon" class="h-9 w-9 text-foreground">
+							<Menu class="h-5 w-5" />
+							<span class="sr-only">Toggle navigation menu</span>
+						</Button>
+					</SheetTrigger>
+					<SheetContent side="left" class="w-72 bg-sidebar p-4 text-sidebar-foreground">
+						<SheetHeader class="text-left">
+							<div class="flex items-center space-x-3 px-2 py-2">
+								<div
+									class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm"
+								>
+									<BookOpen class="h-5 w-5" />
+								</div>
+								<div>
+									<SheetTitle class="text-sm font-bold text-sidebar-foreground">
+										Granthalay
+									</SheetTitle>
+									<span class="text-[11px] font-semibold tracking-wider text-primary uppercase">
+										Publisher Hub
+									</span>
+								</div>
+							</div>
+						</SheetHeader>
+
+						<Separator class="my-3 bg-sidebar-border" />
+
+						<nav class="mt-2 flex-1 space-y-1">
+							{#each navItems as item}
+								<a
+									href={item.href}
+									onclick={() => (mobileNavOpen = false)}
+									class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+								>
+									<item.icon class="h-4 w-4 shrink-0 {item.iconColor}" />
+									<span>{item.title}</span>
+								</a>
+							{/each}
+						</nav>
+
+						<div class="absolute right-4 bottom-4 left-4 border-t border-sidebar-border pt-4">
+							<div class="flex items-center justify-between px-2">
+								<div class="truncate">
+									<p class="truncate text-xs font-semibold text-sidebar-foreground">
+										Granthalay Press
+									</p>
+									<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
+								</div>
+								<Button
+									variant="ghost"
+									size="icon"
+									href="/account/sign-in"
+									title="Sign Out"
+									class="h-8 w-8 text-muted-foreground hover:text-foreground"
+								>
+									<LogOut class="h-4 w-4" />
+								</Button>
+							</div>
+						</div>
+					</SheetContent>
+				</Sheet>
+
+				<div class="flex items-center space-x-2">
+					<BookOpen class="h-5 w-5 text-primary" />
+					<span class="text-sm font-bold tracking-tight text-foreground sm:text-base">
+						Granthalay Pub
+					</span>
+				</div>
 			</div>
 
-			<div class="hidden items-center space-x-2 text-xs text-zinc-400 md:flex">
+			<!-- Status indicator (Laptop / Desktop / Ultrawide) -->
+			<div class="hidden items-center space-x-2 text-xs text-muted-foreground lg:flex">
 				<span>Connected to</span>
-				<span class="rounded bg-indigo-500/10 px-2 py-0.5 font-mono text-[11px] text-indigo-400"
-					>Granthalay Modulith API v1</span
+				<span
+					class="rounded bg-primary/10 px-2 py-0.5 font-mono text-[11px] font-medium text-primary"
 				>
+					Granthalay Modulith API v1
+				</span>
 			</div>
 
-			<div class="flex items-center space-x-4">
-				<a
+			<!-- Action Tools & Theme Switcher -->
+			<div class="flex items-center space-x-2 sm:space-x-3">
+				<Button
+					variant="ghost"
+					size="sm"
 					href="https://github.com/SamsterZero/Granthalay"
 					target="_blank"
 					rel="noreferrer"
-					class="text-xs text-zinc-400 hover:text-zinc-200"
+					class="hidden text-xs text-muted-foreground hover:text-foreground sm:inline-flex"
 				>
 					Storefront
-				</a>
-				<a
+					<ExternalLink class="ml-1 h-3 w-3" />
+				</Button>
+				<Button
+					variant="outline"
+					size="sm"
 					href="/docs"
-					class="rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-1.5 text-xs font-semibold text-zinc-200 hover:bg-zinc-800"
+					class="h-8 px-2.5 text-xs font-semibold sm:h-9 sm:px-3"
 				>
 					Policies & Docs
-				</a>
+				</Button>
+				<ThemeToggle />
 			</div>
 		</header>
 
-		<!-- Main Workspace Body -->
-		<main class="flex-1 overflow-y-auto p-6 md:p-8">
-			{@render children()}
+		<!-- Main Workspace Body (Responsive Container up to Ultrawide) -->
+		<main class="3xl:p-12 flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 2xl:p-10">
+			<div class="3xl:max-w-[2100px] mx-auto w-full max-w-7xl 2xl:max-w-[1700px]">
+				{@render children()}
+			</div>
 		</main>
 	</div>
 </div>
