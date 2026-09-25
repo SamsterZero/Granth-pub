@@ -21,6 +21,7 @@
 	} from '$lib/components/ui/sheet';
 	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
 	import { page } from '$app/state';
+	import { authStore } from '$lib/api/auth.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -138,13 +139,17 @@
 			<Separator class="mb-3 bg-sidebar-border" />
 			<div class="flex items-center justify-between px-2">
 				<div class="truncate">
-					<p class="truncate text-xs font-semibold text-sidebar-foreground">Granthalay Press</p>
-					<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
+					<p class="truncate text-xs font-semibold text-sidebar-foreground">
+						{authStore.publisher?.legalName || 'Granthalay Press'}
+					</p>
+					<p class="truncate text-[10px] text-muted-foreground">
+						{authStore.user?.email || 'admin@granthalay.org'}
+					</p>
 				</div>
 				<Button
 					variant="ghost"
 					size="icon"
-					href="/account/sign-in"
+					onclick={() => authStore.signOut()}
 					title="Sign Out"
 					class="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
 				>
@@ -230,14 +235,16 @@
 								<div class="flex items-center justify-between px-2">
 									<div class="truncate">
 										<p class="truncate text-xs font-semibold text-sidebar-foreground">
-											Granthalay Press
+											{authStore.publisher?.legalName || 'Granthalay Press'}
 										</p>
-										<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
+										<p class="truncate text-[10px] text-muted-foreground">
+											{authStore.user?.email || 'admin@granthalay.org'}
+										</p>
 									</div>
 									<Button
 										variant="ghost"
 										size="icon"
-										href="/account/sign-in"
+										onclick={() => authStore.signOut()}
 										title="Sign Out"
 										class="h-8 w-8 text-muted-foreground hover:text-foreground"
 									>
