@@ -161,22 +161,17 @@
 
 <PublisherLayout>
 	<div class="space-y-6">
-		<!-- Header Section -->
-		<div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-			<div>
-				<div class="flex items-center gap-2">
-					<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-						Settings & Governance
-					</h1>
-					<Badge variant="outline" class="font-mono text-xs">v0.2.0</Badge>
-				</div>
-				<p class="text-sm text-muted-foreground">
+		<!-- Top Action / Context Bar -->
+		<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+			<div class="flex items-center gap-2">
+				<p class="text-xs text-muted-foreground sm:text-sm">
 					Configure your publisher organization, payout integrations, and review binding platform
 					policies.
 				</p>
+				<Badge variant="outline" class="hidden font-mono text-[10px] sm:inline-flex">v0.2.0</Badge>
 			</div>
 
-			<div class="flex items-center gap-2">
+			<div class="flex shrink-0 items-center gap-2">
 				<Button
 					variant="outline"
 					size="sm"

@@ -111,14 +111,11 @@
 
 <PublisherLayout>
 	<div class="3xl:max-w-7xl mx-auto w-full max-w-5xl space-y-8 2xl:max-w-6xl">
-		<!-- Header -->
-		<div>
-			<h2 class="text-2xl font-bold tracking-tight text-foreground">New Title Submission</h2>
-			<p class="text-xs text-muted-foreground">
-				Publish an EPUB manuscript, configure territory availability, and submit for catalog
-				distribution.
-			</p>
-		</div>
+		<!-- Subtitle / Guidance -->
+		<p class="text-xs text-muted-foreground sm:text-sm">
+			Publish an EPUB manuscript, configure territory availability, and submit for catalog
+			distribution.
+		</p>
 
 		<!-- Stepper -->
 		<SubmissionStepper {currentStep} {steps} onSelectStep={(stepId) => (currentStep = stepId)} />

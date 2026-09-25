@@ -164,18 +164,12 @@
 <PublisherLayout>
 	<div class="mx-auto w-full space-y-6">
 		<!-- Top Action Header -->
-		<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-			<div>
-				<h2 class="text-xl font-bold tracking-tight text-foreground sm:text-2xl 2xl:text-3xl">
-					Submissions & Catalog
-				</h2>
-				<p class="text-xs text-muted-foreground sm:text-sm">
-					Manage manuscript review, scheduled releases, storefront withdrawals, and revised
-					editions.
-				</p>
-			</div>
+		<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+			<p class="text-xs text-muted-foreground sm:text-sm">
+				Manage manuscript review, scheduled releases, storefront withdrawals, and revised editions.
+			</p>
 
-			<Button href="/submissions/new" class="gap-2 font-semibold">
+			<Button href="/submissions/new" class="shrink-0 gap-2 font-semibold">
 				<Plus class="h-4 w-4" />
 				New Title Submission
 			</Button>
