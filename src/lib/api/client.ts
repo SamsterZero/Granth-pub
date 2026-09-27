@@ -27,6 +27,13 @@ export class ApiOfflineError extends Error {
 	}
 }
 
+type UnauthorizedHandler = () => void;
+let unauthorizedHandler: UnauthorizedHandler | null = null;
+
+export function setUnauthorizedHandler(handler: UnauthorizedHandler | null): void {
+	unauthorizedHandler = handler;
+}
+
 export function getXsrfToken(): string | null {
 	if (typeof document === 'undefined') return null;
 	const match = document.cookie.match(/(?:^|;\s*)XSRF-TOKEN=([^;]*)/);
@@ -96,6 +103,15 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
 				} catch {
 					// fallback if JSON parsing fails
 				}
+			}
+
+			if (
+				response.status === 401 &&
+				!url.includes('/auth/sign-in') &&
+				!url.includes('/auth/session') &&
+				!url.includes('/auth/me')
+			) {
+				unauthorizedHandler?.();
 			}
 
 			throw new ApiError(response.status, errorMessage, problem);

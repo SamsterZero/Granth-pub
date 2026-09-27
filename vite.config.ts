@@ -28,6 +28,14 @@ export default defineConfig({
 			}
 		})
 	],
+	server: {
+		proxy: {
+			'/api/v1': {
+				target: process.env.VITE_BACKEND_URL || 'http://localhost:8080',
+				changeOrigin: true
+			}
+		}
+	},
 	test: {
 		expect: { requireAssertions: true },
 		projects: [
