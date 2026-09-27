@@ -34,6 +34,7 @@
 		Lock,
 		Scale,
 		Eye,
+		AlertTriangle,
 		Save,
 		Copy,
 		Check
@@ -263,7 +264,7 @@
 					</div>
 
 					<Accordion type="single" class="space-y-3">
-						{#each policies as policy (policy.id)}
+						{#each policies as policy}
 							<AccordionItem
 								value={policy.id}
 								class="overflow-hidden rounded-xl border border-border bg-card px-4 py-2 transition-all data-[state=open]:shadow-sm"
@@ -303,7 +304,7 @@
 										</h4>
 
 										<ul class="space-y-2">
-											{#each policy.keyPoints as point (point)}
+											{#each policy.keyPoints as point}
 												<li class="flex items-start gap-2 text-xs text-muted-foreground">
 													<CheckCircle2
 														class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400"

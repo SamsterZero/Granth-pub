@@ -21,7 +21,6 @@
 	} from '$lib/components/ui/sheet';
 	import ThemeToggle from '$lib/components/layout/ThemeToggle.svelte';
 	import { page } from '$app/state';
-	import { authStore } from '$lib/api/auth.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -103,7 +102,7 @@
 
 		<!-- Nav Links -->
 		<nav class="mt-4 flex-1 space-y-1">
-			{#each navItems as item (item.href)}
+			{#each navItems as item}
 				{@const active = isActive(item.href)}
 				<a
 					href={item.href}
@@ -139,17 +138,13 @@
 			<Separator class="mb-3 bg-sidebar-border" />
 			<div class="flex items-center justify-between px-2">
 				<div class="truncate">
-					<p class="truncate text-xs font-semibold text-sidebar-foreground">
-						{authStore.publisher?.legalName || 'Granthalay Press'}
-					</p>
-					<p class="truncate text-[10px] text-muted-foreground">
-						{authStore.user?.email || 'admin@granthalay.org'}
-					</p>
+					<p class="truncate text-xs font-semibold text-sidebar-foreground">Granthalay Press</p>
+					<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
 				</div>
 				<Button
 					variant="ghost"
 					size="icon"
-					onclick={() => authStore.signOut()}
+					href="/account/sign-in"
 					title="Sign Out"
 					class="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
 				>
@@ -198,7 +193,7 @@
 							<Separator class="my-3 bg-sidebar-border" />
 
 							<nav class="mt-2 flex-1 space-y-1">
-								{#each navItems as item (item.href)}
+								{#each navItems as item}
 									{@const active = isActive(item.href)}
 									<a
 										href={item.href}
@@ -235,16 +230,14 @@
 								<div class="flex items-center justify-between px-2">
 									<div class="truncate">
 										<p class="truncate text-xs font-semibold text-sidebar-foreground">
-											{authStore.publisher?.legalName || 'Granthalay Press'}
+											Granthalay Press
 										</p>
-										<p class="truncate text-[10px] text-muted-foreground">
-											{authStore.user?.email || 'admin@granthalay.org'}
-										</p>
+										<p class="truncate text-[10px] text-muted-foreground">admin@granthalay.org</p>
 									</div>
 									<Button
 										variant="ghost"
 										size="icon"
-										onclick={() => authStore.signOut()}
+										href="/account/sign-in"
 										title="Sign Out"
 										class="h-8 w-8 text-muted-foreground hover:text-foreground"
 									>
