@@ -103,7 +103,7 @@
 
 		<!-- Nav Links -->
 		<nav class="mt-4 flex-1 space-y-1">
-			{#each navItems as item}
+			{#each navItems as item (item.href)}
 				{@const active = isActive(item.href)}
 				<a
 					href={item.href}
@@ -198,7 +198,7 @@
 							<Separator class="my-3 bg-sidebar-border" />
 
 							<nav class="mt-2 flex-1 space-y-1">
-								{#each navItems as item}
+								{#each navItems as item (item.href)}
 									{@const active = isActive(item.href)}
 									<a
 										href={item.href}
