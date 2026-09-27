@@ -128,17 +128,7 @@ export class AuthState {
 		this.isOffline = false;
 
 		try {
-			let response: SignInResponse;
-			try {
-				response = await apiFetch<SignInResponse>('/auth/session');
-			} catch (sessionErr) {
-				if (sessionErr instanceof ApiError && sessionErr.status === 404) {
-					response = await apiFetch<SignInResponse>('/auth/me');
-				} else {
-					throw sessionErr;
-				}
-			}
-
+			const response = await apiFetch<SignInResponse>('/auth/me');
 			this.user = response.user;
 			this.publisher = response.publisher || null;
 			this.isSessionExpired = false;
@@ -149,8 +139,8 @@ export class AuthState {
 
 			if (err instanceof ApiOfflineError) {
 				this.isOffline = true;
-			} else if (err instanceof ApiError && err.status === 401) {
-				// Cookie was absent or expired
+			} else if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
+				// Cookie was absent, expired, or access is unauthenticated
 			}
 			return false;
 		} finally {

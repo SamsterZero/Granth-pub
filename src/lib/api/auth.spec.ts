@@ -96,7 +96,7 @@ describe('AuthState & Cookie Session Store', () => {
 		expect(auth.isLoading).toBe(false);
 	});
 
-	it('verifies active session via backend /auth/session', async () => {
+	it('verifies active session via backend /auth/me', async () => {
 		const mockSession = {
 			user: {
 				id: 'usr-2',
@@ -122,9 +122,9 @@ describe('AuthState & Cookie Session Store', () => {
 		expect(auth.hasInitialized).toBe(true);
 	});
 
-	it('resets user state when checkSession receives 401', async () => {
+	it('resets user state when checkSession receives 401 or 403', async () => {
 		vi.spyOn(client, 'apiFetch').mockRejectedValueOnce(
-			new ApiError(401, 'Session missing or expired')
+			new ApiError(403, 'Forbidden')
 		);
 
 		const isValid = await auth.checkSession();
